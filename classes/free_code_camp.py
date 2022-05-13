@@ -38,14 +38,11 @@ def get_response(url: str)-> dict:
     response = requests.get(url)
     soup_obj = BeautifulSoup(response.text, 'html.parser')
     return create_obj(soup=soup_obj, css_pattern='.post-card-title > a')
-    # for a in soup_obj.select('.post-card-title > a'): # return a list of a elements
-    #     obj_to_return[a.get_text().strip()] = a.get('href')[5:]  # this slice is to avoid conflics with the route /news in base url
-    # return obj_to_return
     
 
 def base_on_tag(url:str)->None:
     '''
-    Prints a dictionary object base on the tag the user choose
+    Prints a dictionary object based on the tag the user choose
     '''
     tag = pyip.inputMenu(
         ['programming','tech','javascript','web-development',
@@ -64,20 +61,16 @@ def show_trending(url: str)-> None:
     soup = BeautifulSoup(response.text, 'html.parser')
     obj = {}
     
-
-
-    print('COL-HEADER')
     obj.update(create_obj(soup, css_pattern='.trending-guides-row > .footer-col-1 > a',clean=False))
     obj.update(create_obj(soup, css_pattern='.trending-guides-row > .footer-col-2 > a',clean=False))
     obj.update(create_obj(soup, css_pattern='.trending-guides-row > .footer-col-3 > .footer-left > a',clean=False))
     obj.update(create_obj(soup, css_pattern='.trending-guides-row > .footer-col-3 > .footer-right > a',clean=False))
     print_news(obj)
-    
 
-
-#print_news(get_response(BASE_URL),BASE_URL)
 
 def main(base_link:str):
+    clean_terminal()
+    print("FREE CODE CAMP CONTENT: ")
     menu = ['Home page news (First 25)', 'Base on tag (First 25)', 'What\'s trending', 'Exit']
     option = pyip.inputMenu(choices=menu, numbered=True)
     clean_terminal()
@@ -91,8 +84,6 @@ def main(base_link:str):
         show_trending(base_link)
 
     
-
-
 if __name__ == "__main__":
 
     while True:
@@ -101,4 +92,5 @@ if __name__ == "__main__":
             break
         input("Press enter to continue.")
 
-        #TODO: show trending apply function create_obj
+#TODO: show trending apply function create_obj ✅
+#TODO: Try to work with it as a class, use self.BASE_LINK to create the base link
