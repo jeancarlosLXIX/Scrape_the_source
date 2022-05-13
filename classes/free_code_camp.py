@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
 import pyinputplus as pyip
+import os
+
 
 
 BASE_URL = 'https://www.freecodecamp.org/news'
@@ -12,16 +14,24 @@ def print_news(objs:dict, url:str = ''):
         print(f"{post_n}) {k.upper()}")
         print(f"LINK: {url + v}\n")
 
+def clean_terminal():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 def create_obj(soup: BeautifulSoup = None, css_pattern: str = '', clean:bool = True):
+    '''
+    This function will create the object used to print the news
+    :param css_pattern: the parameter used in the select method of the soup
+    :param clean: this specify parameter is to separe the loop and slice the firsts elements to avoid conflicts with the /news
+    '''
     obj_to_return = {}
     if clean:
         for a in soup.select(css_pattern): # return a list of a elements
             obj_to_return[a.get_text().strip()] = a.get('href')[5:]  # this slice is to avoid conflics with the route /news in base url
-        return obj_to_return
     else:
          for a in soup.select(css_pattern): 
             obj_to_return[a.get_text().strip()] = a.get('href')
-            return obj_to_return
+            
+    return obj_to_return
 
 
 def get_response(url: str)-> dict:
@@ -52,16 +62,17 @@ def show_trending(url: str)-> None:
     '''
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
-    trendings = {}
-    col_number = 1 # the trending class is divided in 3 parts but the last one is different
-    while col_number <= 2:
-        for trending in soup.select(f'.trending-guides-row > .footer-col-{col_number} > a'):
-            trendings[trending.get_text().strip()] = trending.get('href')
-        col_number += 1
+    obj = {}
     
 
-    print('ALL TRENDING')
-    print_news(trendings)
+
+    print('COL-HEADER')
+    obj.update(create_obj(soup, css_pattern='.trending-guides-row > .footer-col-1 > a',clean=False))
+    obj.update(create_obj(soup, css_pattern='.trending-guides-row > .footer-col-2 > a',clean=False))
+    obj.update(create_obj(soup, css_pattern='.trending-guides-row > .footer-col-3 > .footer-left > a',clean=False))
+    obj.update(create_obj(soup, css_pattern='.trending-guides-row > .footer-col-3 > .footer-right > a',clean=False))
+    print_news(obj)
+    
 
 
 #print_news(get_response(BASE_URL),BASE_URL)
@@ -69,7 +80,7 @@ def show_trending(url: str)-> None:
 def main(base_link:str):
     menu = ['Home page news (First 25)', 'Base on tag (First 25)', 'What\'s trending', 'Exit']
     option = pyip.inputMenu(choices=menu, numbered=True)
-
+    clean_terminal()
     if option == menu[len(menu)-1]:
         return True
     if option == menu[0]:
@@ -77,7 +88,6 @@ def main(base_link:str):
     elif option == menu[1]:
         base_on_tag(base_link)
     elif option == menu[2]:
-        print("ENTRA")
         show_trending(base_link)
 
     
