@@ -1,9 +1,13 @@
-from classes import free_code_camp
+from classes import pages
 
-def print_list(news:list):
-    for n in news:
-        print(n)
+# free_cc = pages.FCC()
 
-FCC = free_code_camp.FreeCodeCamp()
+# while True:
+#     if free_cc.menu(free_cc.BASE_URL):
+#         break
+#     input("Press enter to continue.")
 
-print(FCC.selected_tag('a'))
+
+tech_crunch = pages.TechCrunch()
+
+tech_crunch.print_lastest()
