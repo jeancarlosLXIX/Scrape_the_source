@@ -1,7 +1,11 @@
+import json
+from turtle import pos
+from urllib import response
 import requests
 import pyinputplus as pyip
 from bs4 import BeautifulSoup
 from pages.parent import BasicActions
+
 
 
 # CLASS TECHCRUNCH.COM
@@ -22,20 +26,26 @@ class TechCrunch(BasicActions):
         '''
         self.clean_terminal()
         url = self.BASE_URL + '/video/'
-        self.DRIVER.get(url)
-        response = self.get_response_tech(url=url, element='h2', attribute=['class','post-block__title'])
-        self.print_news(response)
+        # self.DRIVER.get(url)
+        # response = self.get_response_tech(url=url, element='h2', attribute=['class','post-block__title'])
+        # self.print_news(response)
 
     def tech_plus(self):
         '''
         Tech Crunch plus content
         '''
-        tags = ['MARKET-ANALYSIS','GROWTH','EVENTS','INVESTOR-SURVEYS','FUNDRAISING','WORK']
-        options = pyip.inputMenu(tags, numbered=True)
+        tags = ['EVENTS','FUNDRAISING','GROWTH','INVESTOR-SURVEYS','MARKET-ANALYSIS','WORK']
+        code_tag = { # use keys()s to get a list
+        "EVENTS": 576796352,
+        "FUNDRAISING": 576796353,
+        "GROWTH": 576796354,
+        "INVESTOR-SURVEYS": 576796355,
+        "MARKET-ANALYSIS": 576796356,
+        "WORK": 576796357
+        }
+        option = pyip.inputMenu(tags, numbered=True)
         self.clean_terminal()
-        url = self.BASE_URL + f'/techcrunchplus/{options}/'
-        self.DRIVER.get(url)
-        self.print_news(self.get_response_tech(url,'h2',['class','post-block__title']))
+        self.print_category(code_tag[option])
 
 
     def get_response_tech(self, url: str, element:str, attribute = None) -> dict:
@@ -55,6 +65,15 @@ class TechCrunch(BasicActions):
             obj.update({h2.find('a').text.strip():h2.find('a').get('href')})
         
         return obj
+    
+    def print_category(self, category_number: int):
+        url = f"https://techcrunch.com/wp-json/tc/v1/magazine?page=1&tc_ec_category={category_number}"
+        response = requests.get(url).text
+        posts = json.loads(response)
+
+        for idx, post in enumerate(posts, start=1):
+            print(f"{idx}){post['title']['rendered']}\nLINK:{post['link']}\n")
+
 
     def menu(self):
         choices = ['LASTEST NEWS','TECH CRUNCH +', 'VIDEOS', 'EXIT']
