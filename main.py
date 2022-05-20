@@ -1,12 +1,6 @@
 from pages import free_code_camp, tech_crunch, slash_dot
 
 # free_cc = free_code_camp.FCC()
-tech_c= tech_crunch.TechCrunch()
+test = slash_dot.Dzone()
 
-
-# while True:
-#     if free_cc.menu():
-#         break
-#     input("Press enter to continue.")
-
-tech_c.menu()
+test.read_by_category()

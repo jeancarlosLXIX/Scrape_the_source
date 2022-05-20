@@ -1,24 +1,14 @@
 import os
 from bs4 import BeautifulSoup
 import requests
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-
-
 
 
 # Since some things will be a repetition I think it's a good idea to create a clase
 # with some common operations
 class BasicActions:
 
-    def __init__(self, link: str,web_driver_path: str = r'c:\SeleniumDrivers\chromedriver.exe') -> None:
+    def __init__(self, link: str) -> None:
         self.BASE_URL = link
-        option = Options()
-        option.add_argument('--headless')
-        option.add_argument('--no-sandbox')
-        option.add_argument('--disable-dev-sh-usage')
-        self.DRIVER = webdriver.Chrome(web_driver_path, chrome_options=option)
         
 
 
