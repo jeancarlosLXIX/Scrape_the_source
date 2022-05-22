@@ -1,10 +1,8 @@
 import json
-from turtle import pos
-from urllib import response
 import requests
 import pyinputplus as pyip
 from bs4 import BeautifulSoup
-from pages.parent import BasicActions
+from pages.BasicActions import BasicActions
 
 
 
@@ -34,8 +32,7 @@ class TechCrunch(BasicActions):
         '''
         Tech Crunch plus content
         '''
-        tags = ['EVENTS','FUNDRAISING','GROWTH','INVESTOR-SURVEYS','MARKET-ANALYSIS','WORK']
-        code_tag = { # use keys()s to get a list
+        code_tag = { 
         "EVENTS": 576796352,
         "FUNDRAISING": 576796353,
         "GROWTH": 576796354,
@@ -43,7 +40,7 @@ class TechCrunch(BasicActions):
         "MARKET-ANALYSIS": 576796356,
         "WORK": 576796357
         }
-        option = pyip.inputMenu(tags, numbered=True)
+        option = pyip.inputMenu(list(code_tag.keys()), numbered=True)
         self.clean_terminal()
         self.print_category(code_tag[option])
 

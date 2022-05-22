@@ -1,10 +1,9 @@
 https://www.freecodecamp.org/news/ ✅
-https://techcrunch.com/ ✅❓
+https://techcrunch.com/ ✅
 https://news.ycombinator.com/ 🅿️
 https://www.hackerrank.com/blog/ ❌
-https://slashdot.org/ 🔃
-https://dzone.com/
-https://lobste.rs/
+https://dzone.com/ ✅
+https://lobste.rs/ ✅
 https://hashnode.com/ (watch)
 https://thenextweb.com/
 reference

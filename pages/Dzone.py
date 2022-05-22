@@ -1,7 +1,7 @@
 import json
 import requests
 import pyinputplus as pyip
-from pages.parent import BasicActions
+from pages.BasicActions import BasicActions
 
 
 class Dzone(BasicActions):

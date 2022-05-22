@@ -1,7 +1,7 @@
 import pyinputplus as pyip
 import requests
 from bs4 import BeautifulSoup
-from pages.parent import BasicActions
+from pages.BasicActions import BasicActions
 
 
 # FREECODECAMP.COM

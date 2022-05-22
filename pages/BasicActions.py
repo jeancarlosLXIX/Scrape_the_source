@@ -2,6 +2,7 @@ import os
 from bs4 import BeautifulSoup
 import requests
 
+# TODO: a function that takes a list so I can make my code cleanear by just pasing a list of option and return the selected
 
 # Since some things will be a repetition I think it's a good idea to create a clase
 # with some common operations
@@ -20,6 +21,7 @@ class BasicActions:
         and add it to the url if provided.
         '''
         post_n = 0
+        self.clean_terminal()
         for k,v in objs.items():
             post_n += 1
             print(f"{post_n}) {k.upper()}")
@@ -51,12 +53,13 @@ class BasicActions:
     def get_response(self,url:str, patter: str, soup_or_obj: bool = True)-> dict:
         '''
         Returns a Beautiful obj base on the link
-        :param soup_or_obj: if for some reason you get problems getting the object just return the soup
+        :param soup_or_obj: if for some reason you get problems getting the object just change the value
+         to False return the soup
 
         '''
         response = requests.get(url)
         soup_obj = BeautifulSoup(response.text, 'html.parser')
         if soup_or_obj:
-            return self.create_obj(soup=soup_obj, css_pattern=patter)
+            return self.create_obj(soup=soup_obj, css_pattern=patter, clean= not soup_or_obj)
         else:
             return soup_obj

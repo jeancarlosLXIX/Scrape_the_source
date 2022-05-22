@@ -1,6 +1,6 @@
-from pages import free_code_camp, tech_crunch, slash_dot
+from pages import Dzone, FreeCodeCamp, TechCrunch, LobSte
 
 # free_cc = free_code_camp.FCC()
-test = slash_dot.Dzone()
+test = LobSte.LobSte()
 
-test.read_by_category()
+test.menu()
