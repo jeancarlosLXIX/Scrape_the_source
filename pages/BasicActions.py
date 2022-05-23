@@ -1,8 +1,7 @@
 import os
 from bs4 import BeautifulSoup
 import requests
-
-# TODO: a function that takes a list so I can make my code cleanear by just pasing a list of option and return the selected
+import pyinputplus as pyip
 
 # Since some things will be a repetition I think it's a good idea to create a clase
 # with some common operations
@@ -20,12 +19,13 @@ class BasicActions:
         :param url: optional paramiter in case the link of the page isn't complete, we use the base link 
         and add it to the url if provided.
         '''
-        post_n = 0
         self.clean_terminal()
+        post_n = 0
         for k,v in objs.items():
             post_n += 1
             print(f"{post_n}) {k.upper()}")
             print(f"LINK: {url + v}\n")
+    
     
     def clean_terminal(self):
         '''
@@ -33,6 +33,7 @@ class BasicActions:
         '''
         os.system('cls' if os.name == 'nt' else 'clear')
     
+
     def create_obj(self, soup: BeautifulSoup = None, css_pattern: str = '', clean:bool = True):
         '''
         This function will create the object used to print the news
@@ -50,6 +51,7 @@ class BasicActions:
                 
         return obj_to_return
 
+
     def get_response(self,url:str, patter: str, soup_or_obj: bool = True)-> dict:
         '''
         Returns a Beautiful obj base on the link
@@ -63,3 +65,23 @@ class BasicActions:
             return self.create_obj(soup=soup_obj, css_pattern=patter, clean= not soup_or_obj)
         else:
             return soup_obj
+    
+
+    def printing_menu(self, options: None)-> str:
+        if options == None:
+            return "Not options has been passed"
+        options += ["Exit"]
+        option = pyip.inputMenu(options, numbered=True)
+
+        if option == option[-1]:
+            return option
+
+        return option
+    
+
+    def  separator(self, post_number:int, tipe:str):
+        print(f"{20*'*'} {tipe} #{post_number} {20*'*'}\n")
+
+
+    def next_page(self):
+        pass

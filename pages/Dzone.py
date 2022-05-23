@@ -1,6 +1,5 @@
 import json
 import requests
-import pyinputplus as pyip
 from pages.BasicActions import BasicActions
 
 
@@ -35,13 +34,12 @@ class Dzone(BasicActions):
                 "Microservices":6001,
                 "Open Source":7001
          }
-        option = pyip.inputMenu(list(categories.keys()), numbered=True)
+        option = self.printing_menu(list(categories.keys()))
         self.category_or_lastest(categories[option])
 
 
-
-
     def category_or_lastest(self,code:int = 0):
+        self.clean_terminal()
         if code:
             url = f"https://dzone.com/services/widget/article-listV2/list?portal={code}&sort=newest"
         else: 
@@ -49,17 +47,22 @@ class Dzone(BasicActions):
 
         response = requests.get(url).text 
         # This function returns a dict object and in the nodes key we have an array of posts
-        posts = json.loads(response)["result"]["data"]["nodes"] 
+        posts = json.loads(response)["result"]["data"]["nodes"]
         for idx, post in enumerate(posts):
-            # Variables from the JSON request 
-            title, date, views, link = post["title"], post["articleDate"], post["views"],(self.BASE_URL + post['articleLink'])
-            self.articles_title(idx + 1)
-            print(f"{title}\nLink: {link}\nViews: {views}\nPublish date: {date}\n")
-
-
-    def  articles_title(self, article_number:int, simb: str = '*'):
-        print(f"{20*simb} Article #{article_number} {20*simb}\n")
+            views, link = post["views"],(self.BASE_URL + post['articleLink'])
+            self.separator(idx + 1,'Article')
+            print(f"{post['title']}\nLink: {link}\nViews: {views}\nPublish date: {post['articleDate']}\n")
 
 
 
+    def menu(self):
+        choices = ["Lastest news","Category"]
+        option = self.printing_menu(choices)
 
+        if option not in choices:
+            return
+
+        if option == choices[0]:
+            self.lastest()
+        else:
+            self.read_by_category()

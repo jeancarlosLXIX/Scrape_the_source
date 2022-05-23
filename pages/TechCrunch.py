@@ -40,8 +40,8 @@ class TechCrunch(BasicActions):
         "MARKET-ANALYSIS": 576796356,
         "WORK": 576796357
         }
-        option = pyip.inputMenu(list(code_tag.keys()), numbered=True)
-        self.clean_terminal()
+        option = self.printing_menu(list(code_tag.keys()) + ["EXIT"])
+        
         self.print_category(code_tag[option])
 
 
@@ -64,6 +64,7 @@ class TechCrunch(BasicActions):
         return obj
     
     def print_category(self, category_number: int):
+        self.clean_terminal()
         url = f"https://techcrunch.com/wp-json/tc/v1/magazine?page=1&tc_ec_category={category_number}"
         response = requests.get(url).text
         posts = json.loads(response)
@@ -74,18 +75,18 @@ class TechCrunch(BasicActions):
 
     def menu(self):
         choices = ['LASTEST NEWS','TECH CRUNCH +', 'VIDEOS', 'EXIT']
-        options = pyip.inputMenu(choices,numbered=True)
-        print(choices[-1])
-        if options == choices[-1]:
+        choice = self.printing_menu(choices)
+        
+        if choice == choices[-1]:
             return True
         
-        if options == choices[0]:
+        if choice == choices[0]:
             self.print_lastest()
         
-        if options == choices[1]:
+        if choice == choices[1]:
             self.tech_plus()
         
-        if options == choices[2]:
+        if choice == choices[2]:
             self.tech_videos()
         
         input("Press enter to continue...")

@@ -1,6 +1,6 @@
-from pages import Dzone, FreeCodeCamp, TechCrunch, LobSte
+from pages import Dzone, FreeCodeCamp, HashNode, TechCrunch, LobSte
 
 # free_cc = free_code_camp.FCC()
-test = LobSte.LobSte()
+test = HashNode.HashNode()
 
-test.menu()
+test.comunity()

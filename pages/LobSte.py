@@ -1,6 +1,4 @@
 from pages.BasicActions import BasicActions
-from bs4 import BeautifulSoup
-import pyinputplus as pyip
 
 
 class LobSte(BasicActions):
@@ -13,13 +11,13 @@ class LobSte(BasicActions):
         self.print_news(obj)
 
     def category_search(self):
-        category = pyip.inputMenu(["Languages","OS","Practices","Platforms","Tools"], numbered=True)
+        category = self.printing_menu(["Languages","OS","Practices","Platforms","Tools"])
         response = self.get_response(self.BASE_URL + f"/categories/{category}", "span.u-repost-of > a.u-url", soup_or_obj=True)
 
         self.print_news(response)
 
     def menu(self):
-        option = pyip.inputMenu(["Home page", "Category", "Exit"], numbered=True)
+        option = self.printing_menu(["Home page", "Category"])
         
         if option == "Home page":
             self.home_page()
