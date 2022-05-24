@@ -1,6 +1,5 @@
 import json
 import requests
-import pyinputplus as pyip
 from bs4 import BeautifulSoup
 from pages.BasicActions import BasicActions
 

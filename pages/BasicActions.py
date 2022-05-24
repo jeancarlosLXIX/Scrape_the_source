@@ -67,11 +67,16 @@ class BasicActions:
             return soup_obj
     
 
-    def printing_menu(self, options: None)-> str:
+    def display_menu(self, options: None, message:str ="_default" )-> str:
+        '''
+        Displays a menu with the necesary options
+        :param options: A list with all the available choises
+        :param message: optional, message that the user will see
+        '''
         if options == None:
             return "Not options has been passed"
         options += ["Exit"]
-        option = pyip.inputMenu(options, numbered=True)
+        option = pyip.inputMenu(options, numbered=True, prompt= message)
 
         if option == option[-1]:
             return option
@@ -85,3 +90,5 @@ class BasicActions:
 
     def next_page(self):
         pass
+
+    # TODO: implement a bucle pagination function

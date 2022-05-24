@@ -34,7 +34,7 @@ class Dzone(BasicActions):
                 "Microservices":6001,
                 "Open Source":7001
          }
-        option = self.printing_menu(list(categories.keys()))
+        option = self.display_menu(list(categories.keys()))
         self.category_or_lastest(categories[option])
 
 
@@ -57,7 +57,7 @@ class Dzone(BasicActions):
 
     def menu(self):
         choices = ["Lastest news","Category"]
-        option = self.printing_menu(choices)
+        option = self.display_menu(choices)
 
         if option not in choices:
             return
