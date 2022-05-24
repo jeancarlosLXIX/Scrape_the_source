@@ -24,6 +24,22 @@ class HashNode(BasicActions):
             else:
                 page -= 1
             self.clean_terminal()
+    
+    def categories(self):
+        '''
+        Display your blogs by category. (hashnode.com)
+        '''
+        categories = [
+        "Javascript","Web-development", "Reactjs", 
+        "Beginners", "Python", "CSS",
+        "Programming-blogs", "Tutorials", "Developer"
+        ]
+        option = self.display_menu(categories) 
+
+        posts = self.getting_posts(f"https://hashnode.com/api/feed/tag/{option.lower()}?type=hot&page=1")
+        self.print_hashnode(posts)
+
+
 
     def trending(self) -> None:
         '''
@@ -54,22 +70,36 @@ class HashNode(BasicActions):
 
     def print_hashnode(self, posts: None):
         '''
-        This function will be printing the posts/blogs of HashNode
-
+        This function will be printing the blogs of HashNode
         :param posts: a list of dictionaries with the information that will be printed
         
         '''
         self.clean_terminal() 
         for idx,post in enumerate(posts):
-                title,views,hasDomain = post["title"], post["views"], post["publication"].get("domain","")
-                userName = post["publication"]["username"]
-                
+                title,views,has_domain = post["title"], post["views"], post["publication"].get("domain","")
+                user_name = post["publication"]["username"]
                 self.separator(idx + 1, "Blog")
-                if not hasDomain:
-                    print(f"Title: {title}\nLink: https://{userName+self.BASE_URL+post['slug']}")
+                # This is in case the blog is in another domain and not in hasnode domain
+                if not has_domain: 
+                    print(f"Title: {title}\nLink: https://{user_name+self.BASE_URL+post['slug']}")
                 else:
-                    print(f"Title: {title}\nLink: https://{hasDomain+'/'+post['slug']}")
+                    print(f"Title: {title}\nLink: https://{has_domain+'/'+post['slug']}")
                 print(f"Views: {views}\n")
+    
+    def menu(self):
+        options = ["Comunity (lastest post)","See what's trending", "Categories"]
+        option = self.display_menu(options,message="HashNode.com: \n")
+
+        if option == options[-1]: # the function above add "Exit" to the list if doesn't exist
+            return True
+        
+        if option == options[0]:
+            self.comunity()
+        if option == options[1]:
+            self.trending()
+        if option == options[2]:
+            self.categories()
+
 
 
 

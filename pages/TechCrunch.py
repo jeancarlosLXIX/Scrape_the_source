@@ -39,7 +39,7 @@ class TechCrunch(BasicActions):
         "MARKET-ANALYSIS": 576796356,
         "WORK": 576796357
         }
-        option = self.printing_menu(list(code_tag.keys()) + ["EXIT"])
+        option = self.display_menu(list(code_tag.keys()) + ["EXIT"])
         
         self.print_category(code_tag[option])
 
@@ -74,7 +74,7 @@ class TechCrunch(BasicActions):
 
     def menu(self):
         choices = ['LASTEST NEWS','TECH CRUNCH +', 'VIDEOS', 'EXIT']
-        choice = self.printing_menu(choices)
+        choice = self.display_menu(choices)
         
         if choice == choices[-1]:
             return True

@@ -75,11 +75,10 @@ class BasicActions:
         '''
         if options == None:
             return "Not options has been passed"
-        options += ["Exit"]
-        option = pyip.inputMenu(options, numbered=True, prompt= message)
 
-        if option == option[-1]:
-            return option
+        if "Exit" not in options: options += ["Exit"] # To ensure an exit options
+
+        option = pyip.inputMenu(options, numbered=True, prompt= message)
 
         return option
     

@@ -1,8 +1,0 @@
-The get get_response() method: 
-Since some of the links in FCC aren't complete I can't use self.BASE_LINK to load the elements base
-on their tag name so I decided to still use that url parameter
-
-
-the tech plus/ category maybe can work if I use selenium too since the file is auto-generated
-
-techcrunch maybe has to wait, after I decide if i'll use seleniun

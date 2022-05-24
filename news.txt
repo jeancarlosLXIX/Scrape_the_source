@@ -1,14 +1,10 @@
 https://www.freecodecamp.org/news/ ✅
 https://techcrunch.com/ ✅
 https://news.ycombinator.com/ 🅿️
-https://www.hackerrank.com/blog/ ❌
+https://www.hackerrank.com/blog/ ❌ (Selenium)
 https://dzone.com/ ✅
 https://lobste.rs/ ✅
-https://hashnode.com/ (watch)
-https://thenextweb.com/
+https://hashnode.com/ ✅
+
 reference
 https://stackify.com/18-websites-every-developer-should-visit-right-now/
-
-
-TODO FIX:
-printing bug in FCC
