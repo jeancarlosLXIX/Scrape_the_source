@@ -15,7 +15,7 @@ class HashNode(BasicActions):
             posts = json.loads(response)["posts"]
             self.print_hashnode(posts)
             
-            _next = self.display_menu(["Next page", "Previous page"])
+            _next = self.display_menu(["Next page", "Previous page"], "HashNode:")
             
             if _next == "Exit":
                 break
@@ -76,8 +76,13 @@ class HashNode(BasicActions):
         '''
         self.clean_terminal() 
         for idx,post in enumerate(posts):
-                title,views,has_domain = post["title"], post["views"], post["publication"].get("domain","")
-                user_name = post["publication"]["username"]
+                title,views =    post["title"], post["views"]
+                has_domain  =    post["publication"]
+                
+                if has_domain != None: # Checking if the publication attrb exist
+                    has_domain = has_domain.get("domain","")
+                    user_name   =    post["publication"]["username"]
+                
                 self.separator(idx + 1, "Blog")
                 # This is in case the blog is in another domain and not in hasnode domain
                 if not has_domain: 
@@ -99,10 +104,3 @@ class HashNode(BasicActions):
             self.trending()
         if option == options[2]:
             self.categories()
-
-
-
-
-
-
-# https://hashnode.com/api/feed/community?page=1

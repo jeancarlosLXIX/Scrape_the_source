@@ -78,7 +78,7 @@ class BasicActions:
 
         if "Exit" not in options: options += ["Exit"] # To ensure an exit options
 
-        option = pyip.inputMenu(options, numbered=True, prompt= message)
+        option = pyip.inputMenu(options, numbered=True, prompt= message + "\n")
 
         return option
     

@@ -1,11 +1,12 @@
 from pages.BasicActions import BasicActions
+import pyinputplus as pyip
 
 class HackerNews(BasicActions):
 
     def __init__(self, link: str = 'https://news.ycombinator.com/news') -> None:
         super().__init__(link)
 
-    def home_page(self):
+    def home_page(self,url):
         self.clean_terminal()
         posts = self.get_response(self.BASE_URL, "a.titlelink")
 
@@ -21,4 +22,16 @@ class HackerNews(BasicActions):
     def menu(self):
         # TODO: loop menu here?
         page = 1
-        self.home_page()
+        while True:
+            self.home_page(url=f"https://news.ycombinator.com/news?p={page}")
+
+            break_loop = self.display_menu(["Next", "Previous"],"Action")
+
+            if break_loop == "Exit":
+                break
+
+            if break_loop == "Next":
+                page += 1
+            else:
+                if page == 1: continue 
+                page -= 1

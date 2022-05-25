@@ -15,17 +15,9 @@ class TechCrunch(BasicActions):
         This will printe the lastest news on the home page of Tech Crunch
         '''
         self.clean_terminal()
-        self.print_news(self.get_response_tech(self.BASE_URL,'h2', ['class', 'post-block__title']))
-    
-    def tech_videos(self):
-        '''
-        Lastest videos from Tech Crunch
-        '''
-        self.clean_terminal()
-        url = self.BASE_URL + '/video/'
-        # self.DRIVER.get(url)
-        # response = self.get_response_tech(url=url, element='h2', attribute=['class','post-block__title'])
-        # self.print_news(response)
+        n = 1
+        self.print_response_json(f"https://techcrunch.com/wp-json/tc/v1/magazine?page={n}")
+
 
     def tech_plus(self):
         '''
@@ -39,7 +31,7 @@ class TechCrunch(BasicActions):
         "MARKET-ANALYSIS": 576796356,
         "WORK": 576796357
         }
-        option = self.display_menu(list(code_tag.keys()) + ["EXIT"])
+        option = self.display_menu(list(code_tag.keys()),"TechCrunch +:")
         
         self.print_category(code_tag[option])
 
@@ -63,7 +55,6 @@ class TechCrunch(BasicActions):
         return obj
     
     def print_category(self, category_number: int):
-        self.clean_terminal()
         url = f"https://techcrunch.com/wp-json/tc/v1/magazine?page=1&tc_ec_category={category_number}"
         response = requests.get(url).text
         posts = json.loads(response)
@@ -71,11 +62,20 @@ class TechCrunch(BasicActions):
         for idx, post in enumerate(posts, start=1):
             print(f"{idx}){post['title']['rendered']}\nLINK:{post['link']}\n")
 
+    def print_response_json(self,url):
+        response = requests.get(url).text
+        posts = json.loads(response)
+
+        for idx, post in enumerate(posts, start=1):
+            print(f"{idx}){post['title']['rendered']}\nLINK:{post['link']}\n")
+
+
 
     def menu(self):
-        choices = ['LASTEST NEWS','TECH CRUNCH +', 'VIDEOS', 'EXIT']
-        choice = self.display_menu(choices)
+        choices = ['LASTEST NEWS','TECH CRUNCH +']
+        choice = self.display_menu(choices,"Tech Crunch: ")
         
+        self.clean_terminal()
         if choice == choices[-1]:
             return True
         
@@ -84,9 +84,6 @@ class TechCrunch(BasicActions):
         
         if choice == choices[1]:
             self.tech_plus()
-        
-        if choice == choices[2]:
-            self.tech_videos()
         
         input("Press enter to continue...")
         self.clean_terminal()

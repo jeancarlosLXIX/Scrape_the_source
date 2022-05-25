@@ -57,12 +57,12 @@ class Dzone(BasicActions):
 
     def menu(self):
         choices = ["Lastest news","Category"]
-        option = self.display_menu(choices)
+        option = self.display_menu(choices, "DZone: ")
 
         if option not in choices:
             return
 
         if option == choices[0]:
             self.lastest()
-        else:
+        if option == choices[1]:
             self.read_by_category()

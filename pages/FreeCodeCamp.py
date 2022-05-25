@@ -14,12 +14,10 @@ class FCC(BasicActions):
         '''
         Prints a dictionary object based on the tag the user choose
         '''
-        tag = pyip.inputMenu(
-            ['programming','tech','javascript','web-development',
+        tag = self.display_menu(['programming','tech','javascript','web-development',
             'technology','react','startup','software-development',
             'design','python','life-lessons','productivity',
-            'self-improvement','youtube', 'css'],
-            numbered=True)
+            'self-improvement','youtube', 'css'],"FreeCodeCamp: \n")
 
         obj_response = self.get_response(self.BASE_URL + f'/tag/{tag}','.post-card-title > a')
         self.print_news(obj_response,self.BASE_URL)
@@ -49,9 +47,10 @@ class FCC(BasicActions):
         '''
 
         self.clean_terminal()
-        print("FREE CODE CAMP CONTENT: ")
+        
         menu = ['Home page news (First 25)', 'Base on tag (First 25)', 'What\'s trending', 'Exit']
-        option = pyip.inputMenu(choices=menu, numbered=True)
+        option = self.display_menu(menu, "FREE CODE CAMP CONTENT: ")
+
         self.clean_terminal()
         if option == menu[len(menu)-1]:
             return True
