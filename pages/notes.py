@@ -13,7 +13,7 @@ on their tag name so I decided to still use that url parameter
 # TODO: Watch all the modules(pages) to implement new changes made in the BasicActions ✅
 # TODO: Implement main.py to print menu like ✅
 # TODO: Try to do a table
-# TODO: Re-do FCC, links are bad hackernews too and lobSte
+# TODO: Re-do FCC, links are bad hackernews too and lobSte ✅
 # TODO: Make a the printing function cleaner
 # https://rich.readthedocs.io/en/stable/tables.html
 

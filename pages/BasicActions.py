@@ -2,6 +2,9 @@ import os
 from bs4 import BeautifulSoup
 import requests
 import pyinputplus as pyip
+import re
+from rich.console import Console
+from rich.table import Table
 
 # Since some things will be a repetition I think it's a good idea to create a clase
 # with some common operations
@@ -10,7 +13,6 @@ class BasicActions:
     def __init__(self, link: str) -> None:
         self.BASE_URL = link
         
-
 
     def print_news(self,objs:dict, url:str = ''):
         '''
@@ -87,7 +89,42 @@ class BasicActions:
         print(f"{20*'*'} {tipe} #{post_number} {20*'*'}\n")
 
 
-    def next_page(self):
-        pass
+    def next_page(self, func, arg:str, reg:str = ""):
+        '''
+        Since
+        '''
+        page = 1
+        while True:
+            self.clean_terminal()
+            func(arg)
 
-    # TODO: implement a bucle pagination function
+            break_loop = self.display_menu(["Next", "Previous"],"Action:")
+
+            if break_loop == "Exit":
+                break
+
+            if break_loop == "Next":
+                page += 1
+            else:
+                if page == 1: continue 
+                page -= 1
+                
+            arg = re.sub(reg,"",arg)  + str(page) # the match will be delete so we convert the number to string an add it
+
+    def colored_table(self, objs:dict):
+
+        table = Table(title="Free Code Camp")
+        objs_keys = list(objs.keys())
+
+        print(objs_keys)
+
+        table.add_column("#", justify="right", style="cyan")
+        table.add_column("TITLE", justify="right", style="green")
+        table.add_column("LINK", justify="right", style="green")
+        
+        for x,value in enumerate(objs_keys):
+            table.add_row(str(x+1), objs_keys[x], objs[objs_keys[x]])
+
+        self.clean_terminal()
+        console = Console()
+        console.print(table)

@@ -1,5 +1,8 @@
 from pages.BasicActions import BasicActions
 import pyinputplus as pyip
+import requests
+from bs4 import BeautifulSoup
+import re # to replace the numbers
 
 class HackerNews(BasicActions):
 
@@ -8,30 +11,45 @@ class HackerNews(BasicActions):
 
     def home_page(self,url):
         self.clean_terminal()
-        posts = self.get_response(url, "a.titlelink")
+
+        self.print_news_ycombinator(url)
+    
+
+    def job_hunting(self):
+        print("JUST FIRST PAGE:\n")
+        self.print_news_ycombinator("https://news.ycombinator.com/jobs")
+
+
+    def print_news_ycombinator(self, url):
+        response = requests.get(url)
+        soup_obj = BeautifulSoup(response.text, 'html.parser')
+        posts = {}
+
+        for a in soup_obj.select("a.titlelink"):
+            posts[a.get_text().strip()] = self.has_https_in_linK(a.get("href"))
 
         number = 1
-        for key,value in posts.items():
-            
-            if "https" not in value: value = "https://news.ycombinator.com/" + value
-            
+        for key,value in posts.items():            
             self.separator(number,'News')
             print(f"{number}) {key}\nLINK:{value}\n")
             number += 1
+    
+
+    def has_https_in_linK(self,url:str) -> str:
+        '''
+        Some of the links of Hacker news are from the page itself, so they just have the route and ID
+        we need to add the url
+        '''
+        if "https" not in url: 
+             return "https://news.ycombinator.com/" + url
+        else:
+             return url
+    
 
     def menu(self):
-        # TODO: loop menu here?
         page = 1
-        while True:
-            self.home_page(url=f"https://news.ycombinator.com/news?p={page}")
-
-            break_loop = self.display_menu(["Next", "Previous"],"Action")
-
-            if break_loop == "Exit":
-                break
-
-            if break_loop == "Next":
-                page += 1
-            else:
-                if page == 1: continue 
-                page -= 1
+        lookin_for = pyip.inputMenu(["News", "Jobs"], numbered=True)
+        if lookin_for == "News":
+            self.next_page(self.home_page,"https://news.ycombinator.com/news?p=1", "[0-9]")
+        else:
+            self.job_hunting()

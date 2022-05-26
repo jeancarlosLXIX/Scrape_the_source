@@ -15,3 +15,6 @@ dict_classes = {
     "LobSte": LobSte.LobSte(),
     "Hacker news": HackerNews.HackerNews()
 }
+
+if __name__ == "__main__":
+    dict_classes["Free Code Camp"].menu()
