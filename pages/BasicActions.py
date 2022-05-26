@@ -62,7 +62,7 @@ class BasicActions:
         response = requests.get(url)
         soup_obj = BeautifulSoup(response.text, 'html.parser')
         if soup_or_obj:
-            return self.create_obj(soup=soup_obj, css_pattern=patter, clean= not soup_or_obj)
+            return self.create_obj(soup=soup_obj, css_pattern=patter, clean= soup_or_obj)
         else:
             return soup_obj
     

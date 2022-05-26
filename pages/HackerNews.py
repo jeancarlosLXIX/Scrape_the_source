@@ -8,7 +8,7 @@ class HackerNews(BasicActions):
 
     def home_page(self,url):
         self.clean_terminal()
-        posts = self.get_response(self.BASE_URL, "a.titlelink")
+        posts = self.get_response(url, "a.titlelink")
 
         number = 1
         for key,value in posts.items():

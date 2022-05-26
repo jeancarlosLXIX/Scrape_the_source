@@ -15,5 +15,3 @@ dict_classes = {
     "LobSte": LobSte.LobSte(),
     "Hacker news": HackerNews.HackerNews()
 }
-
-dict_classes["Tech Crunch"].print_lastest()
