@@ -20,8 +20,8 @@ class FCC(BasicActions):
             'self-improvement','youtube', 'css'],"FreeCodeCamp: \n")
 
         obj_response = self.get_response(self.BASE_URL + f'/tag/{tag}','.post-card-title > a')
-        self.colored_table(obj_response)
-        return
+        # self.colored_table(obj_response)
+        # return
         self.print_news(obj_response,self.BASE_URL)
 
     def show_trending(self)-> None:

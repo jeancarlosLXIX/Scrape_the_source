@@ -7,11 +7,16 @@ class Dzone(BasicActions):
     def __init__(self, url:str = "https://dzone.com") -> None:
         super().__init__(url)
     
-    def lastest(self):
+    def lastest(self, url):
         '''
         This function will print the lastests news from Dzone
         '''
-        self.category_or_lastest()
+        response = requests.get(url).text 
+        posts = json.loads(response)["result"]["data"]["nodes"]
+        for idx, post in enumerate(posts):
+            views, link = post["views"],(self.BASE_URL + post['articleLink'])
+            self.separator(idx + 1,'Article')
+            print(f"{post['title']}\nLink: {link}\nViews: {views}\nPublish date: {post['articleDate']}\n")
     
     def read_by_category(self):
         '''
@@ -35,15 +40,12 @@ class Dzone(BasicActions):
                 "Open Source":7001
          }
         option = self.display_menu(list(categories.keys()))
-        self.category_or_lastest(categories[option])
+        self.category(categories[option])
 
 
-    def category_or_lastest(self,code:int = 0):
+    def category(self,code:int = 0):
         self.clean_terminal()
-        if code:
-            url = f"https://dzone.com/services/widget/article-listV2/list?portal={code}&sort=newest"
-        else: 
-            url = "https://dzone.com/services/widget/article-listV2/list?page=1&sort=newest"
+        url = f"https://dzone.com/services/widget/article-listV2/list?portal={code}&sort=newest"
 
         response = requests.get(url).text 
         # This function returns a dict object and in the nodes key we have an array of posts
@@ -63,6 +65,7 @@ class Dzone(BasicActions):
             return
 
         if option == choices[0]:
-            self.lastest()
+            url = "https://dzone.com/services/widget/article-listV2/list?sort=newest&page=1"
+            self.next_page(self.lastest,arg=url, reg="page=\d*", replace_with="page=" )
         if option == choices[1]:
             self.read_by_category()

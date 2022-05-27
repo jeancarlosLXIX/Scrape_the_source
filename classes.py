@@ -17,4 +17,5 @@ dict_classes = {
 }
 
 if __name__ == "__main__":
-    dict_classes["Free Code Camp"].menu()
+    # Here I test every instance I want individually
+    dict_classes["Dzone"].menu()

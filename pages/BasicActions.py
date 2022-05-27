@@ -89,9 +89,15 @@ class BasicActions:
         print(f"{20*'*'} {tipe} #{post_number} {20*'*'}\n")
 
 
-    def next_page(self, func, arg:str, reg:str = ""):
+    def next_page(self, func, arg:str, reg:str = "", replace_with:str = ""):
         '''
-        Since
+        Since some pages has in their link a "page=" argument this function will help you
+        check them
+
+        :param func: The function tha will be called in the loop
+        :param arg: This is the argument that the function takes
+        "param reg: a regex code to search the string (arg)
+        :param replace_with: a string that will be used to replace the match string, by defaul is empty
         '''
         page = 1
         while True:
@@ -109,7 +115,7 @@ class BasicActions:
                 if page == 1: continue 
                 page -= 1
                 
-            arg = re.sub(reg,"",arg)  + str(page) # the match will be delete so we convert the number to string an add it
+            arg = re.sub(reg,replace_with,arg)  + str(page) # the match will be delete so we convert the number to string an add it
 
     def colored_table(self, objs:dict):
 
