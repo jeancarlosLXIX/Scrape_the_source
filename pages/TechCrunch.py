@@ -10,13 +10,13 @@ class TechCrunch(BasicActions):
     def __init__(self, url:str = 'https://techcrunch.com/') -> None:
         super().__init__(url)
 
-    def print_lastest(self):
+    def print_lastest(self,url):
         '''
         This will printe the lastest news on the home page of Tech Crunch
         '''
         self.clean_terminal()
         n = 1
-        self.print_response_json(f"https://techcrunch.com/wp-json/tc/v1/magazine?page={n}")
+        self.print_response_json(url)
 
 
     def tech_plus(self):
@@ -32,30 +32,21 @@ class TechCrunch(BasicActions):
         "WORK": 576796357
         }
         option = self.display_menu(list(code_tag.keys()),"TechCrunch +:")
-        
-        self.print_category(code_tag[option])
 
+        self.next_page(
+            func=self.print_category,
+            arg= f"https://techcrunch.com/wp-json/tc/v1/magazine?tc_ec_category={code_tag[option]}&page=1",
+            reg="page=\d*",
+            replace_with="page="
+        )
 
-    def get_response_tech(self, url: str, element:str, attribute = None) -> dict:
-        '''
-        Getting the object from Tech Crunch
-        :param url: link to fecth
-        :param element: this is your HTML element to look for
-        :param attribute: accepts a list with to elements, first attribute and second is the value.
-        '''
-        response = requests.get(url)
-        soup_obj = BeautifulSoup(response.text, 'html.parser')
-        results = soup_obj.find_all(element, attrs={attribute[0]: attribute[1]})
-        obj = {}
-
-        for h2 in  results:
-            # Now here we get the Key and value from h2 element who has an 'a' elements
-            obj.update({h2.find('a').text.strip():h2.find('a').get('href')})
-        
-        return obj
     
-    def print_category(self, category_number: int):
-        url = f"https://techcrunch.com/wp-json/tc/v1/magazine?page=1&tc_ec_category={category_number}"
+    def print_category(self, url:str):
+        '''
+        this function is special for the tech_plus it's easear to read and makes it better for calling the next_page
+        function.
+        
+        '''
         response = requests.get(url).text
         posts = json.loads(response)
 
@@ -80,10 +71,12 @@ class TechCrunch(BasicActions):
             return True
         
         if choice == choices[0]:
-            self.print_lastest()
+            self.next_page(
+            func=self.print_lastest,
+            arg="https://techcrunch.com/wp-json/tc/v1/magazine?page=1",
+            reg="page=\d*",
+            replace_with="page=")
         
         if choice == choices[1]:
             self.tech_plus()
-        
-        input("Press enter to continue...")
-        self.clean_terminal()
+            

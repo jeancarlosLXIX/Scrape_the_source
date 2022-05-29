@@ -40,12 +40,16 @@ class Dzone(BasicActions):
                 "Open Source":7001
          }
         option = self.display_menu(list(categories.keys()))
-        self.category(categories[option])
+        self.next_page(
+            func=self.category,
+            arg=f"https://dzone.com/services/widget/article-listV2/list?portal={categories[option]}&sort=newest&page=1",
+            reg="page=\d*",
+            replace_with="page="
+        )
 
 
-    def category(self,code:int = 0):
+    def category(self,url):
         self.clean_terminal()
-        url = f"https://dzone.com/services/widget/article-listV2/list?portal={code}&sort=newest"
 
         response = requests.get(url).text 
         # This function returns a dict object and in the nodes key we have an array of posts

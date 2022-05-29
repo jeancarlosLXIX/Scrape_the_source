@@ -95,16 +95,21 @@ class BasicActions:
         check them
 
         :param func: The function tha will be called in the loop
-        :param arg: This is the argument that the function takes
+        :param arg: This is the argument the function takes in this case the link
         "param reg: a regex code to search the string (arg)
         :param replace_with: a string that will be used to replace the match string, by defaul is empty
         '''
         page = 1
         while True:
             self.clean_terminal()
-            func(arg)
 
-            break_loop = self.display_menu(["Next", "Previous"],"Action:")
+            try:
+                func(arg)
+                print("Page:", page)
+                break_loop = self.display_menu(["Next", "Previous"],"Action:")
+            except:
+                print("Problem getting the response, try again later.")
+                input("Press enter to continue...")
 
             if break_loop == "Exit":
                 break
@@ -114,8 +119,8 @@ class BasicActions:
             else:
                 if page == 1: continue 
                 page -= 1
-                
-            arg = re.sub(reg,replace_with,arg)  + str(page) # the match will be delete so we convert the number to string an add it
+            # the match will be replaced so we convert the number to string an add it
+            arg = re.sub(reg,replace_with,arg)  + str(page) 
 
     def colored_table(self, objs:dict):
 
