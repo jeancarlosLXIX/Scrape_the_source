@@ -13,6 +13,7 @@ python3 main.py
 If you are using windows you can create an exe file, but first if you don't have it install Pyinstaller and run:
 
 ```bash
+pip install pyinstaller
 pyinstaller --onefile  main.py
 ```
 
