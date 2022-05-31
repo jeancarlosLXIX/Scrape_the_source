@@ -34,7 +34,7 @@ class HashNode(BasicActions):
         "Beginners", "Python", "CSS",
         "Programming-blogs", "Tutorials", "Developer"
         ]
-        option = self.display_menu(categories) 
+        option = self.display_menu(categories,"Choose topic:") 
 
         posts = self.getting_posts(f"https://hashnode.com/api/feed/tag/{option.lower()}?type=hot&page=1")
         self.print_hashnode(posts)
@@ -54,7 +54,7 @@ class HashNode(BasicActions):
             # add the choice with a count
             choices.append(f'{obj["node"]["slug"]}: {obj["count"]}') 
 
-        option = self.display_menu(choices,message="Select trending: \n").split(':')[0]
+        option = self.display_menu(choices,message="Select trending:").split(':')[0]
 
         if option == "Exit": return
 
