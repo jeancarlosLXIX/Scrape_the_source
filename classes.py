@@ -1,4 +1,5 @@
-from pages import Dzone, FreeCodeCamp, HashNode, TechCrunch, LobSte, HackerNews
+from pages.TECH import Dzone, FreeCodeCamp, HashNode, TechCrunch, LobSte, HackerNews
+from pages.VG import GameSpot 
 
 list_of_classes = [
     Dzone.Dzone, FreeCodeCamp.FCC,HashNode.HashNode,
@@ -13,9 +14,10 @@ dict_classes = {
     "Hash Node": HashNode.HashNode(),
     "Tech Crunch": TechCrunch.TechCrunch(),
     "LobSte": LobSte.LobSte(),
-    "Hacker news": HackerNews.HackerNews()
+    "Hacker news": HackerNews.HackerNews(),
+    "Game Spot": GameSpot.GameSpot()
 }
 
 if __name__ == "__main__":
-    # Here I test every instance I want individually
+    # Here you can test every instance  individually
     dict_classes["Dzone"].menu()

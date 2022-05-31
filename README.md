@@ -5,8 +5,15 @@ The purpose of this program is pull data from some pages that provide useful new
 
 ## Usage
 
+If you want to use it normally just run this in the terminal:
 ```bash
 python3 main.py
+```
+
+If you are using windows you can create an exe file, but first if you don't have it install Pyinstaller and run:
+
+```bash
+pyinstaller --onefile  main.py
 ```
 
 ## Contributing

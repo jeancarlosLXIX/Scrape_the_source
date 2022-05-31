@@ -5,6 +5,8 @@ import pyinputplus as pyip
 import re
 from rich.console import Console
 from rich.table import Table
+import webbrowser
+import pyperclip
 
 # Since some things will be a repetition I think it's a good idea to create a clase
 # with some common operations
@@ -36,25 +38,20 @@ class BasicActions:
         os.system('cls' if os.name == 'nt' else 'clear')
     
 
-    def create_obj(self, soup: BeautifulSoup = None, css_pattern: str = '', clean:bool = True):
+    def create_obj(self, soup: BeautifulSoup = None, css_pattern: str = ''):
         '''
         This function will create the object used to print the news
         :param css_pattern: the parameter used in the select method of the soup
-        :param clean: this specific parameter is to separe the loop and slice the firsts elements to avoid conflicts with the /news
-        in the FCC link
         '''
         obj_to_return = {}
-        if clean:
-            for a in soup.select(css_pattern): # return a list of a elements
-                obj_to_return[a.get_text().strip()] = a.get('href')[5:]  # this slice is to avoid conflics with the route /news in base url
-        else:
-            for a in soup.select(css_pattern): 
-                obj_to_return[a.get_text().strip()] = a.get('href')
+       
+        for a in soup.select(css_pattern): 
+            obj_to_return[a.get_text().strip()] = a.get('href')
                 
         return obj_to_return
 
 
-    def get_response(self,url:str, patter: str, soup_or_obj: bool = True)-> dict:
+    def get_response(self,url:str, patter: str = "", soup_or_obj: bool = True)-> dict:
         '''
         Returns a Beautiful obj base on the link
         :param soup_or_obj: if for some reason you get problems getting the object just change the value
@@ -64,7 +61,7 @@ class BasicActions:
         response = requests.get(url)
         soup_obj = BeautifulSoup(response.text, 'html.parser')
         if soup_or_obj:
-            return self.create_obj(soup=soup_obj, css_pattern=patter, clean= soup_or_obj)
+            return self.create_obj(soup=soup_obj, css_pattern=patter)
         else:
             return soup_obj
     
@@ -106,7 +103,7 @@ class BasicActions:
             try:
                 func(arg)
                 print("Page:", page)
-                break_loop = self.display_menu(["Next", "Previous"],"Action:")
+                break_loop = self.display_menu(["Next", "Previous","Open (Must copy the link before select)"],"Action:")
             except:
                 print("Problem getting the response, try again later.")
                 input("Press enter to continue...")
@@ -116,13 +113,34 @@ class BasicActions:
 
             if break_loop == "Next":
                 page += 1
-            else:
+            elif break_loop == "Previous":
                 if page == 1: continue 
                 page -= 1
+            else:
+                self.open_link(pyperclip.paste())
+                continue 
             # the match will be replaced so we convert the number to string an add it
             arg = re.sub(reg,replace_with,arg)  + str(page) 
+    
+
+    def open_link(self,url):
+        '''
+        Some terminals do not provide an option to just ctrl + click to open the link
+        this funtion will take the copy link and opened.
+        '''
+        url
+        if url == '':
+            print("Link can be empty")
+            return False
+        
+        if "https" not in url or "http" not in url:
+            return False
+
+        webbrowser.open_new(url)
+
 
     def colored_table(self, objs:dict):
+        # For later
 
         table = Table(title="Free Code Camp")
         objs_keys = list(objs.keys())

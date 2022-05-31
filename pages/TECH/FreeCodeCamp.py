@@ -32,15 +32,22 @@ class FCC(BasicActions):
         soup = BeautifulSoup(response.text, 'html.parser')
         obj = {} # this will save the keys and values for printing
         
-        obj.update(self.create_obj(soup, css_pattern='.trending-guides-row > .footer-col-1 > a',clean=False))
+        obj.update(self.create_obj_FCC(soup, css_pattern='.trending-guides-row > .footer-col-1 > a'))
         
-        obj.update(self.create_obj(soup, css_pattern='.trending-guides-row > .footer-col-2 > a',clean=False))
+        obj.update(self.create_obj_FCC(soup, css_pattern='.trending-guides-row > .footer-col-2 > a'))
         
-        obj.update(self.create_obj(soup, css_pattern='.trending-guides-row > .footer-col-3 > .footer-left > a',clean=False))
+        obj.update(self.create_obj_FCC(soup, css_pattern='.trending-guides-row > .footer-col-3 > .footer-left > a'))
         
-        obj.update(self.create_obj(soup, css_pattern='.trending-guides-row > .footer-col-3 > .footer-right > a',clean=False))
+        obj.update(self.create_obj_FCC(soup, css_pattern='.trending-guides-row > .footer-col-3 > .footer-right > a'))
         
         self.print_news(obj)
+    
+    def create_obj_FCC(self, soup: BeautifulSoup = None, css_pattern: str = ''):
+        obj_to_return = {}
+        for a in soup.select(css_pattern): # return a list of a elements
+            obj_to_return[a.get_text().strip()] = a.get('href')[5:] # this slice is to avoid conflics with the route /news in base url
+        
+        return obj_to_return
 
     
     def menu(self):
