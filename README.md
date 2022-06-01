@@ -1,4 +1,4 @@
-# Scrape the sauce
+# Scrape the source
 
 The purpose of this program is pull data from some pages that provide useful news about IT
 
