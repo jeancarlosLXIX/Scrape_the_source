@@ -8,22 +8,17 @@ class HashNode(BasicActions):
     def __init__(self, link: str = ".hashnode.dev/") -> None:
         super().__init__(link)
 
-    def comunity(self):
-        page = 1
-        while True:
-            response = requests.get(f"https://hashnode.com/api/feed/community?page={page}").text 
-            posts = json.loads(response)["posts"]
-            self.print_hashnode(posts)
-            
-            _next = self.display_menu(["Next page", "Previous page"], "HashNode:")
-            
-            if _next == "Exit":
-                break
-            elif _next == "Next page":
-                page += 1
-            else:
-                page -= 1
-            self.clean_terminal()
+    def community(self):
+        '''
+        Post made in the community page
+        '''
+        self.next_page(
+            func= self.print_hashnode,
+            arg="https://hashnode.com/api/feed/community?page=1",
+            reg="page=\d*",
+            replace_with="page="
+        )
+    
     
     def categories(self):
         '''
@@ -34,10 +29,14 @@ class HashNode(BasicActions):
         "Beginners", "Python", "CSS",
         "Programming-blogs", "Tutorials", "Developer"
         ]
-        option = self.display_menu(categories,"Choose topic:") 
-
-        posts = self.getting_posts(f"https://hashnode.com/api/feed/tag/{option.lower()}?type=hot&page=1")
-        self.print_hashnode(posts)
+        option = self.display_menu(categories,"Choose topic:")
+        
+        self.next_page(
+            func=self.print_hashnode,
+            arg= f"https://hashnode.com/api/feed/tag/{option.lower()}?type=hot&page=1",
+            reg="page=\d*",
+            replace_with="page="
+        )
 
 
 
@@ -60,7 +59,12 @@ class HashNode(BasicActions):
 
         posts = self.getting_posts(f"https://hashnode.com/api/feed/tag/{option}?type=hot&page=1")
 
-        self.print_hashnode(posts)
+        self.next_page(
+            func=self.print_hashnode,
+            arg= f"https://hashnode.com/api/feed/tag/{option}?type=hot&page=1",
+            reg="page=\d*",
+            replace_with="page="
+        )
 
 
 
@@ -68,14 +72,14 @@ class HashNode(BasicActions):
             response = requests.get(url).text 
             return json.loads(response)["posts"]
 
-    def print_hashnode(self, posts: None):
+    def print_hashnode(self, url:str):
         '''
         This function will be printing the blogs of HashNode
-        :param posts: a list of dictionaries with the information that will be printed
+        :param url: link that will be used to get the post
         
         '''
         self.clean_terminal() 
-        for idx,post in enumerate(posts):
+        for idx,post in enumerate(self.getting_posts(url)):
                 title,views =    post["title"], post["views"]
                 has_domain  =    post["publication"]
                 
@@ -92,14 +96,14 @@ class HashNode(BasicActions):
                 print(f"Views: {views}\n")
     
     def menu(self):
-        options = ["Comunity (lastest post)","See what's trending", "Categories"]
-        option = self.display_menu(options,message="HashNode.com: \n")
+        options = ["Community (lastest post)","See what's trending", "Categories"]
+        option = self.display_menu(options,message="HashNode.com:")
 
         if option == options[-1]: # the function above add "Exit" to the list if doesn't exist
             return True
         
         if option == options[0]:
-            self.comunity()
+            self.community()
         if option == options[1]:
             self.trending()
         if option == options[2]:

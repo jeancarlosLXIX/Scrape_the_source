@@ -45,7 +45,7 @@ class FCC(BasicActions):
     def create_obj_FCC(self, soup: BeautifulSoup = None, css_pattern: str = ''):
         obj_to_return = {}
         for a in soup.select(css_pattern): # return a list of a elements
-            obj_to_return[a.get_text().strip()] = a.get('href')[5:] # this slice is to avoid conflics with the route /news in base url
+            obj_to_return[a.get_text().strip()] = a.get('href') # this slice is to avoid conflics with the route /news in base url
         
         return obj_to_return
 

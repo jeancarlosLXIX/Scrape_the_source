@@ -40,7 +40,7 @@ class HackerNews(BasicActions):
         Some of the links of Hacker news are from the page itself, so they just have the route and ID
         we need to add the url
         '''
-        if "https" not in url: 
+        if "https" not in url or "http" not in url: # Some links are not secure so this prevents a conflict
              return "https://news.ycombinator.com/" + url
         else:
              return url

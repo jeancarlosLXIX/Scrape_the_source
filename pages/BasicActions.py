@@ -103,7 +103,7 @@ class BasicActions:
             try:
                 func(arg)
                 print("Page:", page)
-                break_loop = self.display_menu(["Next", "Previous","Open (Must copy the link before select)"],"Action:")
+                break_loop = self.display_menu(["Next", "Previous","Open (If terminal doesn't allow open link copy it and select me)"],"Action:")
             except:
                 print("Problem getting the response, try again later.")
                 input("Press enter to continue...")
@@ -130,11 +130,15 @@ class BasicActions:
         '''
         url
         if url == '':
-            print("Link can be empty")
-            return False
+            print("Link can't be empty")
+            input("Press enter to continue.")
+            return 
+            
         
         if "https" not in url or "http" not in url:
-            return False
+            print("Bad link")
+            input("Press enter to continue.")
+            return
 
         webbrowser.open_new(url)
 

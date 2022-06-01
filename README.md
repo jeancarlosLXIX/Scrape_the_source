@@ -1,6 +1,7 @@
 # Scrape the source
 
-The purpose of this program is pull data from some pages that provide useful news about IT
+The purpose of this program is pull data from some pages that provide useful news about IT.
+v1.1
 
 
 ## Usage

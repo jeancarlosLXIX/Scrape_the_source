@@ -20,4 +20,4 @@ dict_classes = {
 
 if __name__ == "__main__":
     # Here you can test every instance  individually
-    dict_classes["Dzone"].menu()
+    dict_classes["Hash Node"].menu()
