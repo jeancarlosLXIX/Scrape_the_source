@@ -14,6 +14,7 @@ pycparser==2.21
 Pygments==2.12.0
 PyInputPlus==0.2.12
 pyOpenSSL==22.0.0
+pyperclip==1.8.2
 PySimpleValidate==0.2.12
 PySocks==1.7.1
 requests==2.27.1
