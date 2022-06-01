@@ -14,7 +14,7 @@ If you are using windows you can create an exe file, but first if you don't have
 
 ```bash
 pip install pyinstaller
-pyinstaller --onefile  main.py
+pyinstaller --onefile main.py
 ```
 
 ## Contributing

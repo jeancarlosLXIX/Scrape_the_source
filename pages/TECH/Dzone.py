@@ -39,13 +39,14 @@ class Dzone(BasicActions):
                 "Microservices":6001,
                 "Open Source":7001
          }
-        option = self.display_menu(list(categories.keys()))
-        self.next_page(
-            func=self.category,
-            arg=f"https://dzone.com/services/widget/article-listV2/list?portal={categories[option]}&sort=newest&page=1",
-            reg="page=\d*",
-            replace_with="page="
-        )
+        option = self.display_menu(list(categories.keys()),"Choose category:")
+        if option != "Exit":
+            self.next_page(
+                func=self.category,
+                arg=f"https://dzone.com/services/widget/article-listV2/list?portal={categories[option]}&sort=newest&page=1",
+                reg="page=\d*",
+                replace_with="page="
+            )
 
 
     def category(self,url):
